@@ -19,26 +19,30 @@
 
 ### How to use git hub
 ------
-- …or create a new repository on the command line
+**…or create a new repository on the command line**
 
 
-echo # photoCMS >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git remote add origin git@github.com:DawnEve/photoCMS.git
-git push -u origin master
+- echo # photoCMS >> README.md
+- git init
+- git add README.md
+- git commit -m "first commit"
+- git remote add origin git@github.com:DawnEve/photoCMS.git
+- git push -u origin master
 
-- …or push an existing repository from the command line
 
-git remote add origin git@github.com:DawnEve/photoCMS.git
-git push -u origin master
 
-- …or import code from another repository
+**…or push an existing repository from the command line**
 
-You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+- git remote add origin git@github.com:DawnEve/photoCMS.git
+- git push -u origin master
 
-Import code
+
+
+
+**…or import code from another repository**
+
+- You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+- Import code
 
 
 
