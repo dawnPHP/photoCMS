@@ -1,0 +1,114 @@
+﻿
+文件交接：
+
+
+
+
+
+
+
+===================================
+v0.4
+不知道修改什么，反正是得到了新的文件2个。
+
+这是做好的
+你参考完善一下
+3__one_497375.jpg
+要这样才可以
+5_one_497375.jpg
+比如这样的
+作品ID是5的
+要这样命名
+所以，你要先插入记录
+得到新的ID
+再处理图片上传
+
+
+参照这个做弹出。
+http://180.92.182.206/~phpgood/wuliu/questionsList.php
+
+http://phpgood.com/read.php?tid=37
+14:09 2015-10-06
+
+
+
+-----------------------
+upload:
+	试验能post上传什么。
+	上传文件的头： enctype="multipart/form-data"
+	<form action='demoR.php' method='post' enctype="multipart/form-data">
+-----------------------
+demo1:
+	- index01
+1.一次上传1个文件；基于iframe；即刻上传。
+2.支持chrome, IE8, ff。
+
+	- index02
+1.一次上传1个文件；基于dataform；即刻上传。
+2.支持chrome,ff， 不支持 IE8 。
+
+
+
+-----------------------
+demo2:使用了formdata，支持多文件上传，但是不支持IE8-
+
+
+
+
+===================================
+v0.3
+上次的评价：
+好的，不错的
+我现在发你正式的CSS文件
+你照美工文件做这个功能
+
+收到：
+这三个文件夹是配套的CSS文件
+
+
+这个文件是可以独立运行出效果的
+
+
+看到没有
+然后用这个文件，做添加作品功能
+可能上传的JS你要加一下
+就是点加号可以上传图片
+
+22:13 2015-10-07
+下载了一个国外插件：phpfileuploader.zip
+
+
+16:53 2015-10-08
+http://180.92.182.206/~phpgood/wuliu/questionsList.php
+aaa
+aaa
+用这个会员登录
+然后点击上面的： 我要提问
+你就能看到上传的效果了
+
+
+
+===================================
+v0.2
+和 admin2 目录平级的是前台文件
+online.php  , doonline.php
+弄这两个文件
+
+用后台的 addzuopin.php , doaddzuopin.php 另存一下
+
+后台的所有效果不用
+只单独弄两个文件出来
+
+就是不显示左侧的效果？
+是的
+
+结果：18:11 2015-10-06
+1.做出来 home01.backup.zip 
+2.需要建立 zuopin_image 同级文件夹
+
+看到群里有人想仿站的：http://www.juming.com/
+
+===================================
+v0.1 导入数据库，修改php配置文件。
+在php.ini中：
+error_reporting  =  E_ALL & ~E_NOTICE & ~E_DEPRECATED 
