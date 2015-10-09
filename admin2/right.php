@@ -1,0 +1,80 @@
+<?php
+include_once("checksession.php");
+include_once("../db.php");
+$query = "select * from beian_manage where username='$_SESSION[adminusername2]' ";
+$result = mysql_db_query($DataBase, $query); 
+$r2=mysql_fetch_array($result);
+date_default_timezone_set('PRC');
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <meta http-equiv=content-type content="text/html; charset=utf-8" />
+        <link href="css/admin.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+        <table cellspacing=0 cellpadding=0 width="100%" align=center border=0>
+            <tr height=28>
+                <td background=./img/title_bg1.jpg>当前位置: </td></tr>
+            <tr>
+                <td bgcolor=#b1ceef height=1></td></tr>
+            <tr height=20>
+                <td background=./img/shadow_bg.jpg></td></tr></table>
+        <table cellspacing=0 cellpadding=0 width="90%" align=center border=0>
+            <tr height=100>
+                <td align=middle width=100><img height=100 src="./img/admin_p.gif" 
+                                                width=90></td>
+                <td width=60>&nbsp;</td>
+                <td>
+                    <table height=100 cellspacing=0 cellpadding=0 width="100%" border=0>
+
+                        <tr>
+                            <td>当前时间：<?php echo date('Y-m-d H:i:s');?></td></tr>
+                        <tr>
+                            <td style="font-weight: bold; font-size: 16px"><?php echo $r2[username]; ?></td></tr>
+                            <tr>
+                                <td>级别:<?php if($r2[states]==2){ echo"超级管理员";}else  if($r2[states]==1){ echo"财务人员";}else  if($r2[states]==0){ echo"一般管理员";} ?><br></td>
+                            </tr>
+                        <tr>
+                            <td>欢迎进入网站管理中心！</td></tr></table></td></tr>
+            <tr>
+                <td colspan=3 height=10></td></tr></table>
+        <table cellspacing=0 cellpadding=0 width="95%" align=center border=0>
+            <tr height=20>
+                <td></td></tr>
+            <tr height=22>
+                <td style="padding-left: 20px; font-weight: bold; color: #ffffff" 
+                    align=middle background=./img/title_bg2.jpg>您的相关信息</td></tr>
+            <tr bgcolor=#ecf4fc height=12>
+                <td></td></tr>
+            <tr height=20>
+                <td></td></tr></table>
+        <table cellspacing=0 cellpadding=2 width="95%" align=center border=0>
+            <tr>
+                <td align=right width=100>登陆帐号：</td>
+                <td style="color: #880000"><?php echo $r2[username]; ?></td></tr>
+            <tr>
+                <td align=right>真实姓名：</td>
+                <td style="color: #880000">admin</td></tr>
+            <tr>
+                <td align=right>注册时间：</td>
+                <td style="color: #880000">2007-7-25 15:02:04</td></tr>
+            <tr>
+                <td align=right>登陆次数：</td>
+                <td style="color: #880000">58</td></tr>
+            <tr>
+                <td align=right>上线时间：</td>
+                <td style="color: #880000">2008-12-27 17:02:54</td></tr>
+            <tr>
+                <td align=right>ip地址：</td>
+                <td style="color: #880000">222.240.172.117</td></tr>
+            <tr>
+                <td align=right>身份过期：</td>
+                <td style="color: #880000">30 分钟</td>
+			</tr>
+        </table>		
+<div style="text-align:center;">
+<p>光圈会管理系统</p>
+</div>
+    </body>
+</html>
