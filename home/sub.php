@@ -5,7 +5,7 @@
 <body>
 <?php
 include_once("../db.php");
-include('Dir.class.php');
+include('../class/Dir.class.php');
 
 
 
