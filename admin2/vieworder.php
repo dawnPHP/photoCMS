@@ -93,7 +93,13 @@ $zuopinID = $row["zid"];
     <td><?php echo $ro["biaoti"]; ?></td>
     <td><?php echo $ro["writer"]; ?></td>
     <td><?php echo $ro["ptime"]; ?></td>
-    <td><?php if($ro['filename1']!='') { echo "<a href=../zuopin_image/$ro[filename1] target=_blank><img src=../zuopin_image/$ro[filename1] width=50 border=0></a>"; }else{echo "no image";}?>  </td>
+    <td><?php 
+	$imgFileName=$ro['tid'] . $ro['filename1'] ;
+	//if($ro['filename1']!='') { echo "<a href=../zuopin_image/$ro[filename1] target=_blank><img src=../zuopin_image/$ro[filename1] width=50 border=0></a>"; }else{echo "no image";}
+	
+	if($ro['filename1']!='') { echo "<a href=../zuopin_image/$imgFileName target=_blank><img src=../zuopin_image/$imgFileName width=50 border=0></a>"; }else{echo "no image";}
+	
+	?>  </td>
         <td>
         <?php 
             switch($ro['status']){

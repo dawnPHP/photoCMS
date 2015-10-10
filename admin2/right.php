@@ -1,10 +1,10 @@
 <?php
-include_once("checksession.php");
-include_once("../db.php");
-$query = "select * from beian_manage where username='$_SESSION[adminusername2]' ";
-$result = mysql_db_query($DataBase, $query); 
-$r2=mysql_fetch_array($result);
-date_default_timezone_set('PRC');
+	include_once("checksession.php");
+	include_once("../db.php");
+	$query = "select * from beian_manage where username='$_SESSION[adminusername2]' ";
+	$result = mysql_db_query($DataBase, $query); 
+	$r2=mysql_fetch_array($result);
+	date_default_timezone_set('PRC');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
@@ -64,7 +64,7 @@ date_default_timezone_set('PRC');
                 <td style="color: #880000">58</td></tr>
             <tr>
                 <td align=right>上线时间：</td>
-                <td style="color: #880000">2008-12-27 17:02:54</td></tr>
+                <td style="color: #880000"><?php echo date('Y-m-d h:i:s', time());?></td></tr>
             <tr>
                 <td align=right>ip地址：</td>
                 <td style="color: #880000">222.240.172.117</td></tr>

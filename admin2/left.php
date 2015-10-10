@@ -22,7 +22,7 @@
     </head>
     <body>
         <table height="100%" cellspacing=0 cellpadding=0 width=170 
-               background=./img/menu_bg.jpg border=0>
+               background='./img/menu_bg.jpg' border=0>
                <tr>
                 <td valign=top align=middle>
                     <table cellspacing=0 cellpadding=0 width="100%" border=0>
@@ -34,7 +34,7 @@
                  
                     <table cellspacing=0 cellpadding=0 width=150 border=0>
                         <tr height=22>
-                            <td style="padding-left: 30px" background=./img/menu_bt.jpg><a 
+                            <td style="padding-left: 30px" background='./img/menu_bt.jpg'><a 
                                     class=menuparent onclick=expand(3) 
                                     href="javascript:void(0);">赛事管理</a></td></tr>
                         <tr height=4>
@@ -61,7 +61,7 @@
                             <td colspan=2></td></tr></table>
                     <table cellspacing=0 cellpadding=0 width=150 border=0>
                         <tr height=22>
-                            <td style="padding-left: 30px" background=./img/menu_bt.jpg><a 
+                            <td style="padding-left: 30px" background='./img/menu_bt.jpg'><a 
                                     class=menuparent onclick=expand(4) 
                                     href="javascript:void(0);">赛事组管理</a></td></tr>
                         <tr height=4>
@@ -85,7 +85,7 @@
                             <td colspan=2></td></tr></table>
                     <table cellspacing=0 cellpadding=0 width=150 border=0>
                         <tr height=22>
-                            <td style="padding-left: 30px" background=./img/menu_bt.jpg><a 
+                            <td style="padding-left: 30px" background='./img/menu_bt.jpg'><a 
                                     class=menuparent onclick=expand(5) 
                                     href="javascript:void(0);">作品</a></td></tr>
                         <tr height=4>
@@ -129,7 +129,7 @@
                     <table cellspacing=0 cellpadding=0 width=150 border=0>
 
                         <tr height=22>
-                            <td style="padding-left: 30px" background=./img/menu_bt.jpg><a 
+                            <td style="padding-left: 30px" background='./img/menu_bt.jpg'><a 
                                     class=menuparent onclick=expand(0) 
                                     href="javascript:void(0);">个人管理</a></td></tr>
                         <tr height=4>
@@ -150,7 +150,7 @@
                                 <table cellspacing=0 cellpadding=0 width=150 border=0>
 
                         <tr height=22>
-                            <td style="padding-left: 30px" background=./img/menu_bt.jpg><a 
+                            <td style="padding-left: 30px" background='./img/menu_bt.jpg'><a 
                                     class=menuparent onclick=expand(9) 
                                     href="javascript:void(0);">管理员管理</a></td></tr>
                         <tr height=4>
@@ -176,7 +176,7 @@
                                          <table cellspacing=0 cellpadding=0 width=150 border=0>
 
                         <tr height=22>
-                            <td style="padding-left: 30px" background=./img/menu_bt.jpg><a 
+                            <td style="padding-left: 30px" background='./img/menu_bt.jpg'><a 
                                     class=menuparent onclick=expand(10) 
                                     href="javascript:void(0);">会员管理</a></td></tr>
                         <tr height=4>
