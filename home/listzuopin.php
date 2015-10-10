@@ -56,7 +56,7 @@ switch ($_GET['sorting']) {
         $orderBy = 'tid';
         break;
 }
-$query = "select zuopin.tid , zuopin.saishi_id , saishi.biaoti as competition , zuopin.group_id , gqh_group.name as group_name , zuopin.biaoti , zuopin.writer , zuopin.ptime , zuopin.payment_status , zuopin.filename1 , zuopin.status , zuopin.dtime from gqh_group , saishi , zuopin where $t and gqh_group.tid=zuopin.group_id and saishi.tid=zuopin.saishi_id order by tid desc  limit $a,$page_size";
+$query = "select zuopin.tid, zuopin.saishi_id , saishi.biaoti as competition , zuopin.group_id , gqh_group.name as group_name , zuopin.biaoti , zuopin.writer , zuopin.ptime , zuopin.payment_status , zuopin.filename1 , zuopin.status , zuopin.dtime from gqh_group , saishi , zuopin where $t and gqh_group.tid=zuopin.group_id and saishi.tid=zuopin.saishi_id order by tid desc  limit $a,$page_size";
 $result = mysql_db_query($DataBase, $query);
 
 ?>
@@ -128,7 +128,10 @@ $result = mysql_db_query($DataBase, $query);
     <td><?php echo $row["writer"]; ?></td>
     <td><?php echo $row["ptime"]; ?></td>
     <td><?php $num = $row["payment_status"]; if($num == 0){echo "没有成功支付";}else{echo "已成功支付";}; ?></td>
-    <td><?php if($row['filename1']!='') { echo "<a href=../zuopin_image/$row[filename1] target=_blank><img src=../zuopin_image/$row[filename1] width=50 border=0></a>"; }else{echo "no image";}?>  </td>
+    <td><?php
+	$imgFileName = $row['tid'] . $row['filename1'];
+	if($row['filename1']!='') {
+		echo "<a href=../zuopin_image/$imgFileName target=_blank><img src=../zuopin_image/$imgFileName width=50 border=0></a>"; }else{echo "no image";}?>  </td>
         <td>
         <?php 
             switch($row['status']){
