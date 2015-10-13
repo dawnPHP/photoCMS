@@ -16,6 +16,7 @@ dustbin
 
 #图片文件夹不算
 zuopin_image
+images\usrTemp
 
 #显示文件列表
 *.list.bat
