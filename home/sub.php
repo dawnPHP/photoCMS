@@ -7,8 +7,7 @@
 include_once("../db.php");
 include('../class/Dir.class.php');
 
-
-
+//获取数据
 $biaoti=$_POST["biaoti"];
 $dtime = date('Y-m-d H:i:s');
 $ip= $_SERVER["REMOTE_ADDR"];
@@ -16,9 +15,12 @@ $info = $_POST["info"];
 $file_name = $_FILES['pic']['name'];//可能是数组或变量
 $arrFileID=array();//保存文件的id号
 
+$group_id = $_POST["group_id"];
+$saishi_id = $_POST["saishi_id"];
+
+$mid=5;//会员id，对应member中的tid。可以从session中获取。
 
 //存在文件就上传
-
 for($i=0,$a=0,$b=0; $i<count($file_name); $i++){
 
 	if(!empty($file_name[$i])){
@@ -97,6 +99,11 @@ function upload(){
 	global $DataBase;
 	global $arrFileID;
 	
+	global $group_id;
+	global $saishi_id;
+	
+	global $mid;
+	
 	//设置上传路径并上传
 	$dir="../zuopin_image/";
 	for($i=0;$i<count($file_name);$i++){
@@ -113,7 +120,7 @@ function upload(){
 
 
 			//更新数据库
-			$query="insert into zuopin (biaoti,filename1,group_id,info,ip,dtime) values ('$biaoti[$i]','$filename[$i]',8,'$info[$i]','$ip','$dtime')";	
+			$query="insert into zuopin (biaoti,filename1,saishi_id, group_id,info,ip,dtime,mid) values ('$biaoti[$i]','$filename[$i]','$saishi_id','$group_id','$info[$i]','$ip','$dtime','$mid')";	
 		
 			mysql_select_db($DataBase) or die('error');
 			$result = mysql_query($query);
@@ -150,10 +157,11 @@ function upload(){
 //把四张照片生成一条order
 function add2Orders(){
 	global $arrFileID;
+	global $mid;
 	////////////////////////////////////////////////
 	//向orders 插入一条数据
 	$amount_total=4;
-	$mid=2;//会员id，对应member中的tid
+
 
 	$query="insert into orders (amount,mid,dtime,ip) values ('$amount_total','$mid','$dtime','$ip')";
 	 

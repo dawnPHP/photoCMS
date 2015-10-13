@@ -1,4 +1,12 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<?php
+//必须是post跳转，否则返回首页
+if(!isset($_POST['group_id'])){
+	echo 'Invalid URL!';
+	header("Location:online.php");
+	exit();
+}
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -86,6 +94,21 @@ function showPreview(index, url){
             </div>
         </div>
         <!--内容end-->
+		
+		
+		
+		
+	<!--用隐藏表单传赛事组id和赛事id，此页面只能选择组，赛事id为默认-->
+	<input type='hidden' id="group_id" name="group_id" value=""/>
+	<?php
+		$group_id=$_POST['group_id'];
+		echo "<script>document.getElementById('group_id').value='{$group_id}'</script>";
+	?>
+	<input type='hidden' id="saishi_id" name="saishi_id" value="4"/>
+	<!-- end of 传赛事组id和赛事id -->
+		
+		
+		
     </div>
     <div class="header online_header">
         <b class="header_title">在线报名</b>
