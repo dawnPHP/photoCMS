@@ -1,8 +1,13 @@
 ﻿<?php
 //赛事id=4  摄影大赛二
 //赛事组id=4
-include 'checkcookie.php';
+//include 'checkcookie.php';
+include_once("../db.php");
+include '../class/MyDebug.class.php';
 //include 'dologin.php';
+
+$mid=2;//从session中取出用户id号
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -30,8 +35,8 @@ include 'checkcookie.php';
                 <li>
                     <div class="pic">
                         <b>1</b>
-                        <img src="images/temp/pic1.jpg" />
-                        <i class="close"></i>
+                        <!--img src="images/temp/pic1.jpg" />
+                        <i class="close"></i-->
                     </div>
                     <span>冰川</span>
                 </li>
@@ -160,4 +165,55 @@ include 'checkcookie.php';
     function loginHide() {
         $(".login_box").animate({ right: "-250px" }, 500);
     }
+</script>
+
+<?php
+//从用户id查询其最新的订单号
+mysql_select_db($DataBase) or die('error'.mysql_error());
+
+$sql="select tid from orders where mid='{$mid}' order by dtime limit 1";
+$rows=mysql_query($sql) or die('Select Order ID Err: ' . mysql_error());
+$row=mysql_fetch_assoc($rows);
+$oid=$row['tid'];
+
+//从用户id查询其最新的订单号,由最新订单号获取作品的文件名
+$sql="select a.tid, a.biaoti, a.info,a.filename1 from zuopin a, orders_zuopin b  where a.tid=b.zid and  b.oid='{$oid}'";
+$rows=mysql_query($sql) or die('Select Order ID Err: ' . mysql_error());
+//显示给js
+$picList='<script>var picList=[];var titleList=[];' . "\n";
+while($row=mysql_fetch_assoc($rows)){
+	$picList .= 'picList.push("'. $row['tid'] . $row['filename1'].'");' ."\n";
+	$titleList .= 'titleList.push("'. $row['biaoti'].'");' ."\n";
+}
+$script = $picList . $titleList . '</script>';
+echo $script;
+?>
+<script type="text/javascript">
+$(document).ready(function(){
+	//显示'缩略图'img
+	$('.online_list li div').each(function(index){
+		//怎么识别是哪一组？
+		if(index>=4) return;
+		
+		//创建img标签
+		var oImg=document.createElement('img');
+		oImg.setAttribute('src','../zuopin_image/'+picList[index]);
+		$(this).append( oImg );
+		//创建i标签
+		var oI=document.createElement('i');
+		oI.setAttribute('class','close');
+		$(oI).on('click',function(){
+			if(confirm('你要删除第'+index+'张照片吗？')){
+				alert('正在删除'+index+'...');
+				//接着用ajax传递图片？
+				//删除图片、重新上传？此后js代码将会非常困难
+			}
+		});
+		$(this).append( oI );
+	});
+	//显示'缩略图'标题
+	$('.online_list li span').each(function(index){
+		$(this).replaceWith( titleList[index] );
+	});
+});
 </script>
