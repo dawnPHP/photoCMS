@@ -1,10 +1,8 @@
 ﻿<?php
-//必须是post跳转，否则返回首页
-if(!isset($_POST['group_id'])){
-	echo 'Invalid URL!';
-	header("Location:online.php");
-	exit();
-}
+include 'checkcookie.php';
+$saishi_id=$_POST['saishi_id'];
+$group_id=$_POST['group_id'];
+//print_r($_POST);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -18,11 +16,6 @@ if(!isset($_POST['group_id'])){
 </head>
 <body>
 <script type="text/javascript">
-/*function showpic(value){
-	document.getElementById("spic"+value).src="images/temp/pic1.jpg";
-}
-*/
-
 function showPreview(index, url){
 	index++;
 	document.getElementById("spic"+index).src = url;
@@ -30,10 +23,12 @@ function showPreview(index, url){
 </script>
 <form action="sub.php" method="post" enctype="multipart/form-data">
     <div class="imgbox" style="background-image: url(images/temp/online_02_bg.jpg);" onclick="loginHide();">
-        <a href="index.html" class="online_logo"></a>
+        <a href="index.php" class="online_logo"></a>
         <!--内容start-->
         <div class="online_main">
-            <div class="H2_title">您将上传“一般组”</div>
+            <div class="H2_title">您将上传<?php if($group_id==4){
+				echo "【"."一般组"."】";	
+			}if($group_id==3){echo "【"."我去过的地方2015专题组"."】";}?></div>
             <ul class="upload_list">
                 <li>
                     <div class="pic">
@@ -47,9 +42,6 @@ function showPreview(index, url){
                         <p><input type="text" name="info[]" class="input_text" placeholder="请输入作品说明" /></p>
                     </div>
                 </li>
-				
-				
-				
                 <li>
 		    <div class="pic"><span></span><img src="" id="spic2" />
                        <input type='file'  name="pic[]" style=" width:136px; height:97px; position:absolute;opacity:0;z-index:3" /></div>
@@ -58,9 +50,6 @@ function showPreview(index, url){
                         <p><input type="text" name="info[]" class="input_text" placeholder="请输入作品说明" /></p>
                     </div>
                 </li>
-				
-				
-				
                 <li>
 		    <div class="pic"><span></span>
 			<img src="" id="spic3" />
@@ -71,9 +60,6 @@ function showPreview(index, url){
                         <p><input type="text" name="info[]" class="input_text" placeholder="请输入作品说明" /></p>
                     </div>
                 </li>
-				
-				
-				
                 <li>
 		    <div class="pic"><span></span>
 			<img src="" id="spic4" />
@@ -84,9 +70,6 @@ function showPreview(index, url){
                         <p><input type="text" name="info[]" class="input_text" placeholder="请输入作品说明" /></p>
                     </div>
                 </li>
-				
-				
-				
             </ul>
             <div class="online_operate">
                 <div class="upload_tips">参赛文件格式要求：<br />JPEG格式，文件尺寸最大为4096x2160像素</div>
@@ -94,25 +77,27 @@ function showPreview(index, url){
             </div>
         </div>
         <!--内容end-->
-		
-		
-		
-		
-	<!--用隐藏表单传赛事组id和赛事id，此页面只能选择组，赛事id为默认-->
-	<input type='hidden' id="group_id" name="group_id" value=""/>
-	<?php
-		$group_id=$_POST['group_id'];
-		echo "<script>document.getElementById('group_id').value='{$group_id}'</script>";
-	?>
-	<input type='hidden' id="saishi_id" name="saishi_id" value="4"/>
-	<!-- end of 传赛事组id和赛事id -->
-		
-		
-		
     </div>
     <div class="header online_header">
         <b class="header_title">在线报名</b>
-        <div class="login_tips"><span class="login_icon" onclick="loginShow();">登录</span></div>
+         <div class="login_tips">
+		<?php
+			if($login==0)
+			{
+		?> 
+		 <span class="login_icon" onclick="loginShow();">登录</span>								
+		<?php
+			}else
+			if($login==1)
+			{
+		?>
+				<a href="member.php"><span class="login_icon"  >会员中心</span></a>
+				
+				| <a href="logout.php"><span class="login_icon"  >退出</span></a>
+		 <?php
+			 }
+	         ?>	
+	</div>
     </div>
     <div class="login_box">
         <div class="form_box">
@@ -120,7 +105,7 @@ function showPreview(index, url){
                 <tr><td>账号：</td><td><input id="name" type="text" class="text" placeholder="手机号码/电子邮箱地址" /></td></tr>
                 <tr><td>密码：</td><td><input id="password" type="password" class="text" /></td></tr>
                 <tr><td colspan="2"><a href="#" class="fr forget_a">忘记密码？</a><span class="span_check"><input id="Checkbox1" type="checkbox" /><b>自动登录</b></span></td></tr>
-                <tr><th colspan="2"><input id="btn1" type="button" value="登录" class="btn" onclick="loginHide();" /><p><a href="register.html">没有账号?</a></p></th></tr>
+                <tr><th colspan="2"><input id="btn1" type="button" value="登录" class="btn" onclick="loginHide();" /><p><a href="register.php">没有账号?</a></p></th></tr>
             </table>
         </div>
     </div>
@@ -131,11 +116,17 @@ function showPreview(index, url){
             温馨提示：<br />
             请确认您已经完成了所有参赛照片的上传，支付完毕后将无法修改。
         </div>
-        <div class="alert_btn"><input type="submit" class="btn06" value="确认" /><span class="inlineBlock pl65"><a href="javascript:void(0);" class="btn06" onclick="$('#Online_pay').hide();">再想想</a></span></div>
+	<div class="alert_btn">
+        <!--用隐藏表单传递赛事id和赛事组id -->
+	<input type='hidden' name="saishi_id" value="<?php echo $saishi_id; ?>"/>
+	<input type='hidden' name="group_id" value="<?php echo $group_id;?>" />
+	<input type="submit" class="btn06" value="确认" />
+	<span class="inlineBlock pl65"><a href="javascript:void(0);" class="btn06" onclick="$('#Online_pay').hide();">再想想</a></span>
+        </div>
     </div>
 </form>
 <!--
- <div class="alert_btn"><a href="Online_03.html" class="btn06">确认</a><span class="inlineBlock pl65"><a href="javascript:void(0);" class="btn06" onclick="$('#Online_pay').hide();">再想想</a></span></div>
+ <div class="alert_btn"><a href="Online_03.php" class="btn06">确认</a><span class="inlineBlock pl65"><a href="javascript:void(0);" class="btn06" onclick="$('#Online_pay').hide();">再想想</a></span></div>
     </div>
 -->
     <!--确认支付弹窗End-->
@@ -150,6 +141,7 @@ function showPreview(index, url){
         $(".login_box").animate({ right: "-250px" }, 500);
     }
 </script>
+
 
 
 

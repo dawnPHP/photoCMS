@@ -2,11 +2,38 @@
 //赛事id=4  摄影大赛二
 //赛事组id=4
 include 'checkcookie.php';
-include_once("db.php");
-include 'class/MyDebug.class.php';
 //include 'dologin.php';
 
-$mid=5;//从session中取出用户id号
+
+
+
+
+
+
+
+
+
+
+$query = "select * from orders where mid='$_SESSION[memberid]'  order by tid desc limit 1  ";
+$result = mysql_db_query($DataBase, $query); 
+$r2=mysql_fetch_array($result);
+
+$one=$r2[tid];
+
+
+/*=======================================================
+//下一行的逻辑有问题！
+//tid<'$one'
+//相当于认为最近的2次的订单就是报名的订单？
+//没支付算吗？先报的第二组算吗？仅报名一组算吗？
+=======================================================*/
+$query = "select * from orders where mid='$_SESSION[memberid]' and tid<'$one'  order by tid desc limit 1  ";
+$result = mysql_db_query($DataBase, $query); 
+$r3=mysql_fetch_array($result);
+
+$two=$r3[tid];
+
+
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -32,59 +59,70 @@ $mid=5;//从session中取出用户id号
             </div>
             <div class="online_title">一般组：</div>
             <ul class="online_list">
+			
+			
+			
+			
+			
+			
+			
+			
+		        <?php
+        $sql = "select * from orders_zuopin where oid ='$one'";
+    $re = mysql_db_query($DataBase, $sql);
+                    while($ro2=mysql_fetch_array($re))
+                    {
+					
+	        $sql = "select * from  zuopin where tid ='$ro2[zid]'";
+    $re2 = mysql_db_query($DataBase, $sql);
+                   $ro=mysql_fetch_array($re2);			
+					
+                    ?>
                 <li>
                     <div class="pic">
                         <b>1</b>
-                        <!--img src="images/temp/pic1.jpg" />
-                        <i class="close"></i-->
+                        <img src="zuopin_image/<?php echo $ro[filename1] ; ?>" />
+                        <i class="close"></i>
                     </div>
-                    <span>冰川</span>
+                    <span><?php echo $ro[biaoti] ; ?></span>
                 </li>
-                <li>
-                    <div class="pic">
-                        <b>2</b>
-                    </div>
-                    <span>作品名</span>
-                </li>
-                <li>
-                    <div class="pic">
-                        <b>3</b>
-                    </div>
-                    <span>作品名</span>
-                </li>
-                <li>
-                    <div class="pic">
-                        <b>4</b>
-                    </div>
-                    <span>作品名</span>
-                </li>
+				
+				
+				 <?php } ?>
+				
+				
+				
+	 
             </ul>
             <div class="online_title">我去过的地方（2015年专题组）：</div>
             <ul class="online_list">
+            		
+			
+			
+		        <?php
+        $sql = "select * from orders_zuopin where oid ='$two'";
+    $re = mysql_db_query($DataBase, $sql);
+                    while($ro2=mysql_fetch_array($re))
+                    {
+					
+	        $sql = "select * from  zuopin where tid ='$ro2[zid]'";
+    $re2 = mysql_db_query($DataBase, $sql);
+                   $ro=mysql_fetch_array($re2);			
+					
+                    ?>
                 <li>
                     <div class="pic">
                         <b>1</b>
+                        <img src="zuopin_image/<?php echo $ro[filename1] ; ?>" />
+                        <i class="close"></i>
                     </div>
-                    <span>作品名</span>
+                    <span><?php echo $ro[biaoti] ; ?></span>
                 </li>
-                <li>
-                    <div class="pic">
-                        <b>2</b>
-                    </div>
-                    <span>作品名</span>
-                </li>
-                <li>
-                    <div class="pic">
-                        <b>3</b>
-                    </div>
-                    <span>作品名</span>
-                </li>
-                <li>
-                    <div class="pic">
-                        <b>4</b>
-                    </div>
-                    <span>作品名</span>
-                </li>
+				
+				
+				 <?php } ?>
+				
+				
             </ul>
             <div class="online_operate">
                 <p>以上是您的上传作品，点击“确认支付”后将转入付款环节</p>
@@ -135,7 +173,7 @@ $mid=5;//从session中取出用户id号
 	</ul>
         <!--用隐藏表单传赛事组id和赛事id，此页面只能选择组，赛事id为默认-->
 	<input type='hidden' id="group_id" name="group_id" value=""/>
-    <input type='hidden' id="saishi_id" name="saishi_id" value="4"/>
+        <input type='hidden' id="saishi_id" name="saishi_id" value="4"/>
 	<!-- <div class="alert_btn"><input type="submit"  class="btn06" value="下一步" /></div> -->
         <div class="alert_btn"><a href="javascript:document.form1.submit()" class="btn06">下一步</a></div>
         </form>
@@ -165,55 +203,4 @@ $mid=5;//从session中取出用户id号
     function loginHide() {
         $(".login_box").animate({ right: "-250px" }, 500);
     }
-</script>
-
-<?php
-//从用户id查询其最新的订单号
-mysql_select_db($DataBase) or die('error'.mysql_error());
-
-$sql="select tid from orders where mid='{$mid}' order by dtime limit 1";
-$rows=mysql_query($sql) or die('Select Order ID Err: ' . mysql_error());
-$row=mysql_fetch_assoc($rows);
-$oid=$row['tid'];
-
-//从用户id查询其最新的订单号,由最新订单号获取作品的文件名
-$sql="select a.tid, a.biaoti, a.info,a.filename1 from zuopin a, orders_zuopin b  where a.tid=b.zid and  b.oid='{$oid}'";
-$rows=mysql_query($sql) or die('Select Order ID Err: ' . mysql_error());
-//显示给js
-$picList='<script>var picList=[];var titleList=[];' . "\n";
-while($row=mysql_fetch_assoc($rows)){
-	$picList .= 'picList.push("'. $row['filename1'].'");' ."\n";
-	$titleList .= 'titleList.push("'. $row['biaoti'].'");' ."\n";
-}
-$script = $picList . $titleList . '</script>';
-echo $script;
-?>
-<script type="text/javascript">
-$(document).ready(function(){
-	//显示'缩略图'img
-	$('.online_list li div').each(function(index){
-		//怎么识别是哪一组？
-		if(index>=4) return;
-		
-		//创建img标签
-		var oImg=document.createElement('img');
-		oImg.setAttribute('src','zuopin_image/'+picList[index]);
-		$(this).append( oImg );
-		//创建i标签
-		var oI=document.createElement('i');
-		oI.setAttribute('class','close');
-		$(oI).on('click',function(){
-			if(confirm('你要删除第'+index+'张照片吗？')){
-				alert('正在删除'+index+'...');
-				//接着用ajax传递图片？
-				//删除图片、重新上传？此后js代码将会非常困难
-			}
-		});
-		$(this).append( oI );
-	});
-	//显示'缩略图'标题
-	$('.online_list li span').each(function(index){
-		$(this).replaceWith( titleList[index] );
-	});
-});
 </script>
