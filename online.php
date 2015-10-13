@@ -1,12 +1,12 @@
 ﻿<?php
 //赛事id=4  摄影大赛二
 //赛事组id=4
-//include 'checkcookie.php';
-include_once("../db.php");
-include '../class/MyDebug.class.php';
+include 'checkcookie.php';
+include_once("db.php");
+include 'class/MyDebug.class.php';
 //include 'dologin.php';
 
-$mid=2;//从session中取出用户id号
+$mid=5;//从session中取出用户id号
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -182,7 +182,7 @@ $rows=mysql_query($sql) or die('Select Order ID Err: ' . mysql_error());
 //显示给js
 $picList='<script>var picList=[];var titleList=[];' . "\n";
 while($row=mysql_fetch_assoc($rows)){
-	$picList .= 'picList.push("'. $row['tid'] . $row['filename1'].'");' ."\n";
+	$picList .= 'picList.push("'. $row['filename1'].'");' ."\n";
 	$titleList .= 'titleList.push("'. $row['biaoti'].'");' ."\n";
 }
 $script = $picList . $titleList . '</script>';
@@ -197,7 +197,7 @@ $(document).ready(function(){
 		
 		//创建img标签
 		var oImg=document.createElement('img');
-		oImg.setAttribute('src','../zuopin_image/'+picList[index]);
+		oImg.setAttribute('src','zuopin_image/'+picList[index]);
 		$(this).append( oImg );
 		//创建i标签
 		var oI=document.createElement('i');

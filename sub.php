@@ -4,8 +4,8 @@
 </head>
 <body>
 <?php
-include_once("../db.php");
-include('../class/Dir.class.php');
+include_once("db.php");
+include('class/Dir.class.php');
 
 //获取数据
 $biaoti=$_POST["biaoti"];
@@ -105,7 +105,7 @@ function upload(){
 	global $mid;
 	
 	//设置上传路径并上传
-	$dir="../zuopin_image/";
+	$dir="zuopin_image/";
 	for($i=0;$i<count($file_name);$i++){
 		if($file_name[$i]!=""){
 			$ee=explode(".",$file_name[$i]);
@@ -123,11 +123,16 @@ function upload(){
 			$query="insert into zuopin (biaoti,filename1,saishi_id, group_id,info,ip,dtime,mid) values ('$biaoti[$i]','$filename[$i]','$saishi_id','$group_id','$info[$i]','$ip','$dtime','$mid')";	
 		
 			mysql_select_db($DataBase) or die('error');
-			$result = mysql_query($query);
+			$result = mysql_query($query) or die('insert Err: '.mysql_error());
+			
 			if($result){
 				$tid=mysql_insert_id();
+				//文件命名
 				$arrFileID[$i]=$tid;
 				move_uploaded_file($tmp_name[$i], $dir.$tid.$filename[$i] ); 
+				//在数据库文件名中插入id序号
+				$query="update zuopin set filename1=concat(tid,filename1) where tid='$tid';";
+				mysql_query($query) or die('update Err: '.mysql_error());
 				//把上传的照片存到 upload folder 里
 				echo '标题：'.$biaoti[$i];
 				echo "添加作品成功！<br>";

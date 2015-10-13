@@ -1,6 +1,6 @@
 <?php
 //include_once("checksession.php");
-include_once("../db.php");
+include_once("db.php");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
@@ -94,10 +94,10 @@ $zuopinID = $row["zid"];
     <td><?php echo $ro["writer"]; ?></td>
     <td><?php echo $ro["ptime"]; ?></td>
     <td><?php 
-	$imgFileName=$ro['tid'] . $ro['filename1'] ;
-	//if($ro['filename1']!='') { echo "<a href=../zuopin_image/$ro[filename1] target=_blank><img src=../zuopin_image/$ro[filename1] width=50 border=0></a>"; }else{echo "no image";}
+	$imgFileName=$ro['filename1'] ;
+	if($ro['filename1']!='') { echo "<a href=zuopin_image/$ro[filename1] target=_blank><img src=zuopin_image/$ro[filename1] width=50 border=0></a>"; }else{echo "no image";}
 	
-	if($ro['filename1']!='') { echo "<a href=../zuopin_image/$imgFileName target=_blank><img src=../zuopin_image/$imgFileName width=50 border=0></a>"; }else{echo "no image";}
+	//if($ro['filename1']!='') { echo "<a href=../zuopin_image/$imgFileName target=_blank><img src=../zuopin_image/$imgFileName width=50 border=0></a>"; }else{echo "no image";}
 	
 	?>  </td>
         <td>
