@@ -6,14 +6,6 @@ include 'checkcookie.php';
 
 
 
-
-
-
-
-
-
-
-
 $query = "select * from orders where mid='$_SESSION[memberid]'  order by tid desc limit 1  ";
 $result = mysql_db_query($DataBase, $query); 
 $r2=mysql_fetch_array($result);
@@ -66,8 +58,11 @@ $two=$r3[tid];
 			
 			
 			
-			
+
 		        <?php
+/*=======================================================
+// 前四个图
+=======================================================*/			
         $sql = "select * from orders_zuopin where oid ='$one'";
     $re = mysql_db_query($DataBase, $sql);
                     while($ro2=mysql_fetch_array($re))
@@ -82,7 +77,7 @@ $two=$r3[tid];
                     <div class="pic">
                         <b>1</b>
                         <img src="zuopin_image/<?php echo $ro[filename1] ; ?>" />
-                        <i class="close"></i>
+                        <i id="zp<?php echo $ro['tid'];?>"class="close"></i>
                     </div>
                     <span><?php echo $ro[biaoti] ; ?></span>
                 </li>
@@ -100,6 +95,9 @@ $two=$r3[tid];
 			
 			
 		        <?php
+/*=======================================================
+// 后四个图
+=======================================================*/
         $sql = "select * from orders_zuopin where oid ='$two'";
     $re = mysql_db_query($DataBase, $sql);
                     while($ro2=mysql_fetch_array($re))
@@ -114,7 +112,7 @@ $two=$r3[tid];
                     <div class="pic">
                         <b>1</b>
                         <img src="zuopin_image/<?php echo $ro[filename1] ; ?>" />
-                        <i class="close"></i>
+                        <i id="zp<?php echo $ro['tid'];?>"class="close"></i>
                     </div>
                     <span><?php echo $ro[biaoti] ; ?></span>
                 </li>
@@ -203,4 +201,80 @@ $two=$r3[tid];
     function loginHide() {
         $(".login_box").animate({ right: "-250px" }, 500);
     }
+</script>
+
+<script type="text/javascript">
+//=========================my dom fn lib=========================
+//该库函数的兼容性有待验证。
+//但是原生js确实比jQ快很多。
+//获取前一个节点
+function getPrevious(obj){
+	if(obj.previousElementSibling){
+		return obj.previousElementSibling;
+	}else{
+		return obj.previousSibling;
+	}
+}
+//获取后一个节点
+function getNext(obj){
+	if(obj.nextElementSibling){
+		return obj.nextElementSibling;
+	}else{
+		return obj.nextSibling;
+	}
+}
+//获取父节点
+function getParent(obj){
+	if(obj.parentElement){
+		return obj.parentElement;
+	}else{
+		return obj.parentNode;
+	}
+}
+//=========================end of my dom fn lib=========================
+
+
+//-----------------------------------当前页面操作函数
+//替换src为默认图像, 替换图片标题为默认值
+function srcToDefault(obj){
+	//修改标题
+	getNext( getParent(obj) ).innerHTML='示例图片';
+	//修改图片
+	getPrevious(obj).src='images/temp/pic1.jpg';
+}
+
+//定义事件
+$(document).ready(function(){
+	var aTid=[];
+	$('.pic i').each(function(index){
+		//获取所有图片id号
+		var _this=this;
+		aTid[index]=$(this).attr('id');//.parents();
+		//为 单击删除按钮 绑定事件
+		$(this).on('click',function(){
+			var title=getNext( getParent(_this) ).innerHTML;
+			if(confirm('你要删除标题为"'+title+'"的照片吗？')){
+				//第1步：隐藏删除按钮
+				_this.style.display='none';
+				
+				//第2步：后台删除图片
+				//alert('正在删除'+title+'...');//aTid[index]
+				$.post('doDeleteSingleImg.php',
+					{'tid':aTid[index]},
+					//后台返回删除结果，元素为2的数组
+					//0为失败，1为成功，后面是消息。
+					function(data){
+						//失败了提示
+						if(data[0]==0){
+							alert('删除失败: ' + data[1]);
+						}
+						//成功了不提示
+					},'json');
+				
+				//第3步：替换为默认图片
+				srcToDefault(_this)//.previe;
+			}//end of confirm;
+		});//end of click;
+	});//end of each;
+});//end of ready
 </script>
