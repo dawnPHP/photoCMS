@@ -36,9 +36,9 @@ online_02.php没有显示当时选择图片的效果
 
 v0.8.4
 为火狐做了个兼容FileReader(html5方案)
+IE不兼容。
 	//include('class/MyDebug.class.php');
 	//MyDebug::f($_FILES,'debug.txt');
-IE不兼容。
 
 ===================================
 v0.7
