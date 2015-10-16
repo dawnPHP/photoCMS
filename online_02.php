@@ -149,33 +149,64 @@ function showPreview(index, url){
 $(document).ready(function(){
 	//'缩略图'提交iframe方案
 	//添加该iframe框架
-	$('body').append( $('<iframe id="exec_target" name="exec_target" style="visualbility:none; position:absolute; width:0;height:0;"></iframe>') );
+	$('body').append( $('<iframe id="exec_target" name="exec_target" style="position:absolute; width:0;height:0;"></iframe>') );
 	
 	//绑定提交事件
+	wjl=[]
 	$("input[name='pic[]']").each(function(index){
+		wjl[index]=this;
+		//单击事件
 		$(this).change(function(){
-			//添加临时表单
-			var sf=document.createElement('form');
-			sf.setAttribute('method','post');
-			sf.setAttribute('action','doImgPreviewUpload.php');
-			sf.setAttribute('target','exec_target');
-			sf.setAttribute('enctype','multipart/form-data');			
-			sf.appendChild( this );
-			//克隆一个副本到临时表单，失败！
-			//sf.appendChild( $(this).clone()[0] );
+			zz=this
+			//方案1：本地预览方案(html5新特性)
+			if(typeof FileReader == "function"){
+				showPreviewHtml5(this, $('#spic'+(index+1))[0]);
+			}else{
+			//方案2：上传到服务器端的预览方案(iframe)
+				//添加临时表单
+				var sf=document.createElement('form');
+				sf.setAttribute('method','post');
+				sf.setAttribute('action','doImgPreviewUpload.php');
+				sf.setAttribute('target','exec_target');
+				sf.setAttribute('enctype','multipart/form-data');			
+				sf.appendChild( this );
+				
+				//添加临时文本框
+				var oInput=document.createElement('input');
+				oInput.setAttribute('type','text');
+				oInput.setAttribute('name','index');
+				oInput.setAttribute('value',index);
+				sf.appendChild(oInput);
 			
-			//添加临时文本框
-			var oInput=document.createElement('input');
-			oInput.setAttribute('type','text');
-			oInput.setAttribute('name','index');
-			oInput.setAttribute('value',index);
-			sf.appendChild(oInput);
-			//提交'缩略图'
-			sf.submit();
-			
-			//再把input file放回原处
-			$('.upload_list li img')[index].parentNode.appendChild(this);
+				//提交'缩略图'
+				sf.submit();
+
+				//再把input file放回原处
+				$('.upload_list li img')[index].parentNode.appendChild(this);
+			}
 		});
 	})
 });
+
+
+
+// 检查是否支持FileReader对象
+function showPreviewHtml5(originObj, targetImgObj){
+	if (typeof FileReader != 'undefined') {
+	　　var acceptedTypes = {
+	　　　　'image/png': true,
+	　　　　'image/jpeg': true,
+	　　　　'image/gif': true
+	　　};
+	　　if (acceptedTypes[originObj.files[0].type] === true) {
+	　　　　var reader = new FileReader();
+	　　　　reader.onload = function (event) {
+	　　　　　　//var image = new Image();
+	　　　　　　var image = targetImgObj;
+	　　　　　　image.src = event.target.result;
+	　　　　};
+	　　	reader.readAsDataURL(originObj.files[0]);
+	　　}
+	}
+}
 </script>

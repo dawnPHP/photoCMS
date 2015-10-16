@@ -21,6 +21,25 @@ v0.8.2
 已经达到效果
 
 
+v0.8.3
+http://testproject.com.id39861.hklin1.doctoryun.net/online_02.php
+我传空间上了
+显示图片的
+245995445@qq.com
+aaa
+用这个会员登录
+
+你测试的
+online_02.php没有显示当时选择图片的效果
+我做了测试，好象是没有激活  doImgPreviewUpload.php
+这个文件 的功能
+
+v0.8.4
+为火狐做了个兼容FileReader(html5方案)
+IE不兼容。
+	//include('class/MyDebug.class.php');
+	//MyDebug::f($_FILES,'debug.txt');
+
 ===================================
 v0.7
 又一次收到 online.php  online_02.php
